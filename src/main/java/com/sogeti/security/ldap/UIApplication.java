@@ -16,6 +16,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sogeti.voucher.util.PrincipalUser;
+import com.sogeti.voucher.util.VoucherConstants;
+import com.sogeti.voucher.util.VoucherResponse;
+
 @SpringBootApplication
 @ComponentScan(basePackages="com.sogeti")
 @EntityScan("com.sogeti.voucher.models")
@@ -38,12 +42,34 @@ public class UIApplication {
 		logger.info("principal user :: " + user.getName());
 		return user;
 	}
+	
+	private String authority;
 
 	@RequestMapping("/authenticate")
-	public Authentication getAuthentication() {
+	public VoucherResponse getAuthentication() {
 		logger.info("principal authorities :: " +SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 		logger.info("principal user :: " + SecurityContextHolder.getContext().getAuthentication().isAuthenticated());
-		return SecurityContextHolder.getContext().getAuthentication();
+		VoucherResponse voucherResponse = new VoucherResponse();
+		try {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			//String authority = "";
+			if(!SecurityContextHolder.getContext().getAuthentication().getAuthorities().isEmpty() &&
+					SecurityContextHolder.getContext().getAuthentication().getAuthorities().size()>0){
+				SecurityContextHolder.getContext().getAuthentication().getAuthorities().forEach(  auth -> this.authority = auth.getAuthority());
+				
+			}else{
+				this.authority= "ROLE_EMPLOYEE";
+			}
+			PrincipalUser currentUser = new PrincipalUser(username, authority);
+			voucherResponse.setStatus(VoucherConstants.SUCCESS);
+			voucherResponse.setSuccessResponse(currentUser);
+			
+		} catch (Exception e) {
+			voucherResponse.setStatus(VoucherConstants.FAILURE);
+			voucherResponse.setFailureResponse("Not a valid user credentials");
+		}
+		
+		return voucherResponse;
 	}
 	
 	public static void main(String[] args) {

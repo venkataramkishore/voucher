@@ -9,27 +9,26 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="databasefile")
 @NamedQuery(name="Databasefile.findAll", query="SELECT d FROM Databasefile d")
 public class Databasefile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false, length=255)
-	private String filename;
+	private Long id;
 
-	@Column(nullable=false)
 	private byte[] bytes;
+
+	private String filename;
 
 	public Databasefile() {
 	}
 
-	public String getFilename() {
-		return this.filename;
+	public Long getId() {
+		return this.id;
 	}
 
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public byte[] getBytes() {
@@ -38,6 +37,14 @@ public class Databasefile implements Serializable {
 
 	public void setBytes(byte[] bytes) {
 		this.bytes = bytes;
+	}
+
+	public String getFilename() {
+		return this.filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 }

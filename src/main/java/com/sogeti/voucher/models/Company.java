@@ -2,6 +2,9 @@ package com.sogeti.voucher.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -31,19 +34,23 @@ public class Company implements Serializable {
 	private Integer voucherthreshold;
 
 	//bi-directional many-to-one association to Certificate
+	@JsonIgnore
 	@OneToMany(mappedBy="company")
 	private List<Certificate> certificates;
 
 	//bi-directional many-to-one association to Employee
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="administrator_id", nullable=false)
 	private Employee employee;
 
 	//bi-directional many-to-one association to Testidentification
+	@JsonIgnore
 	@OneToMany(mappedBy="company")
 	private List<Testidentification> testidentifications;
 
 	//bi-directional many-to-one association to Voucher
+	@JsonIgnore
 	@OneToMany(mappedBy="company")
 	private List<Voucher> vouchers;
 

@@ -1,0 +1,38 @@
+<div class="panel panel-primary">
+	<!-- Default panel contents -->
+	<div class="panel-heading">Certificate</div>
+	<div class="panel-body">
+		<form novalidate="novalidate">
+			<div class="form-group">
+				<label for="abbreviation">Abbreviation</label> <input type="text" pattern="[A-Z]"
+					class="form-control" id="abbreviation" data-ng-model="currCertificate.abbreviation" required
+					placeholder="Abbreviation" maxlength="10">
+			</div>
+			<div class="form-group">
+				<label for="abbreviation">Code</label> <input type="text" pattern="\w"
+					class="form-control" id="code" data-ng-model="currCertificate.code" required
+					placeholder="Code" maxlength="20">
+			</div>
+			<div class="form-group">
+				<label for="name">Name</label> <input type="text" class="form-control"
+					id="name" data-ng-model="currCertificate.name" required
+					placeholder="Name" pattern="\w+" maxlength="100">
+			</div>
+			<div class="form-group">
+				<label for="passingscore">Passing Score</label> <input
+					type="number" min="1" max="100" class="form-control" id="passingscore" pattern="[0-9]" required
+					data-ng-model="currCertificate.passingscore" placeholder="Default value">
+			</div>
+			<div class="form-group">
+				<label for="active">Status</label> <select id="status" data-ng-model="currCertificate.status"
+					class="form-control" required>
+					<option selected>--Select--</option>
+					<option value="Active">Active</option>
+					<option value="Inactive">Inactive</option>
+				</select>
+			</div>
+			<button type="button" class="btn btn-default">Cancel</button>
+			<button type="submit" class="btn btn-primary">Add</button>
+		</form>
+	</div>
+</div>

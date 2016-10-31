@@ -1,0 +1,1 @@
+angular.module("companyModule", ['ui.bootstrap']);

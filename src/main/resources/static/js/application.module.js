@@ -1,0 +1,1 @@
+angular.module("voucherApp", [ 'ngRoute', 'ui.bootstrap', 'companyModule', 'parameterModule', 'certificateModule' ]);

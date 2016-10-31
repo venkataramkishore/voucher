@@ -1,8 +1,16 @@
 package com.sogeti.voucher.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -49,14 +57,17 @@ public class Employee implements Serializable {
 	private String username;
 
 	//bi-directional many-to-one association to Company
+	@JsonIgnore
 	@OneToMany(mappedBy="employee")
 	private List<Company> companies;
 
 	//bi-directional many-to-one association to Exam
+	@JsonIgnore
 	@OneToMany(mappedBy="employee")
 	private List<Exam> exams;
 
 	//bi-directional many-to-one association to Testidentification
+	@JsonIgnore
 	@OneToMany(mappedBy="employee")
 	private List<Testidentification> testidentifications;
 
