@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name="employee")
-@NamedQuery(name="Employee.findAll", query="SELECT e FROM Employee e")
+@NamedQuery(name="Employee.findAll", query="SELECT e FROM Employee e where e.status='IN_SERVICE'")
 public class Employee implements Serializable {
 	private static final long serialVersionUID = 1L;
 

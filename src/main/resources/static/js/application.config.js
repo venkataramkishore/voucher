@@ -22,6 +22,12 @@ angular
 										controller : 'parameterCtrl'
 									})
 							.when(
+									'/employees',
+									{
+										templateUrl : 'js/components/employees/employee.component.html',
+										controller : 'employeeCtrl'
+									})
+							.when(
 									'/certificates',
 									{
 										templateUrl : 'js/components/certificates/certificate.component.html',
