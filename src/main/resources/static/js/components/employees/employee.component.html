@@ -1,0 +1,60 @@
+<div class="well well-sm">
+<!--  table panel starts -->
+			<div class="panel panel-primary">
+				<!-- Default panel contents -->
+				<div class="panel-heading">
+					<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Employee(s) <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a data-ng-click="changeView('all')">All</a></li>
+    <li><a data-ng-click="changeView('inservice')">In Service</a></li>
+    <li><a data-ng-click="changeView('outservice')">Out Service</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a data-ng-click="changeView('managers')">Only Manager(s)</a></li>
+    <li><a data-ng-click="changeView('admins')">Only Admin(s)</a></li>
+  </ul>
+</div>
+ <input class="pull-right" style="color:black" data-ng-model="search">
+				</div>
+				<div class="panel-body">
+					<!-- Table -->
+					<div class="table-responsive">
+					<table class="table table-striped table-condensed table-hover table-bordered">
+						<thead>
+							<tr>
+								<th>First name</th>
+								<th>Last name</th>
+								<th>Username</th>
+								<th>Email</th>
+								<th>Manager Emp#</th>
+								<th>Role</th>
+								<th>Status</th>
+								<th>Functional number</th>
+							</tr>
+						</thead>
+						<tbody data-ng-if="employeeList.length==0">
+							<tr>
+								<td colspan="8">No employee(s) to show.</td>
+							</tr>
+						</tbody>
+						<tbody data-ng-if="employeeList.length>0" data-ng-repeat="emp in employeeList.slice(((currentPage-1)*maxSize), ((currentPage)*maxSize)) | filter:search ">
+							<tr>
+								<td>{{emp.firstname}}</td>
+								<td>{{emp.lastname}}</td>
+								<td>{{emp.username}}</td>
+								<td>{{emp.emailname}}</td>
+								<td>{{emp.managerid}}</td>
+								<td>{{emp.role}}</td>
+								<td>{{emp.status}}</td>
+								<td title="{{emp.functiondescription}}">{{emp.functionnumber}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<ul data-uib-pagination data-total-items="employeeList.length" data-max-size="10" data-force-ellipses="true" data-ng-model="currentPage" data-ng-change="pageChanged()"></ul>
+					</div>
+				</div>
+			</div>
+			<!--  table panel ends -->
+</div>
