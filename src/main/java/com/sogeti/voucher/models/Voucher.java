@@ -2,6 +2,9 @@ package com.sogeti.voucher.models;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +37,8 @@ public class Voucher implements Serializable {
 	private Date validtill;
 
 	//bi-directional many-to-one association to Exam
-	@OneToMany(mappedBy="voucher")
+	@JsonIgnore
+	@OneToMany(mappedBy="voucher", fetch=FetchType.LAZY)
 	private List<Exam> exams;
 
 	//bi-directional many-to-one association to Company
@@ -43,6 +47,7 @@ public class Voucher implements Serializable {
 	private Company company;
 
 	//bi-directional many-to-one association to Purchaseorder
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="purchaseorder_code", nullable=false)
 	private Purchaseorder purchaseorder;

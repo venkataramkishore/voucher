@@ -1,0 +1,59 @@
+<div class="well well-lg">
+	<!--  table panel starts -->
+	<div class="panel panel-primary">
+		<!-- Default panel contents -->
+		<div class="panel-heading">
+			Purchase Order(s) <input class="pull-right" style="color:black" data-ng-model="search">
+		</div>
+		<div class="panel-body">
+			<form class="form-inline">
+				<div class="form-group">
+					<label for="porderlist">Purchase Order</label> 
+					<select class="form-control" id="porderlist" data-ng-model="selectedPOrder" data-ng-change="poChange()"
+							data-ng-options="order as order.code for order in purchaseorderList">
+						<option value="-1">--Select--</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="code">Code </label>{{selectedPOrder.code}}
+				</div>
+				<div class="form-group">
+					<label for="orderdate">Order date </label>{{selectedPOrder.orderdate}}
+				</div>
+				<!-- <div class="form-group">
+					<label for="orderdate">Company {{selectedPOrder.orderdate}}</label>
+				</div> -->
+			</form>
+			<!-- Table -->
+		<div id="exportable" class="table-responsive" data-ng-if="vouchers.length >0">
+			<table class="table table-striped table-condensed table-hover table-bordered">
+				<thead>
+					<tr>
+						<th>Voucher</th>
+						<th>Empno</th>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<tbody data-ng-if="vouchers.length==0">
+					<tr>
+						<td colspan="4">No Voucher(s) to show.</td>
+					</tr>
+				</tbody>
+				<tbody data-ng-if="vouchers.length>0"
+					data-ng-repeat="voucher in vouchers | filter:search ">
+					<tr>
+						<td>{{voucher.code}}</td>
+						<td>{{voucher.employeeId}}</td>
+						<td>{{voucher.firstname}} {{voucher.lastname}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</div>
+		<div class="panel-footer" data-ng-if="vouchers.length>0">
+			<a class="btn btn-primary btn-sm" data-ng-click="exportXLSData()">Download XLS</a>
+			<a class="btn btn-primary btn-sm" data-ng-click="exportPDFData()">Download PDF</a>
+		</div>
+	</div>
+	<!--  table panel ends -->
+</div>

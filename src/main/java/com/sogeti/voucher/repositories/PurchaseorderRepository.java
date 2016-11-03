@@ -13,6 +13,6 @@ import com.sogeti.voucher.models.Purchaseorder;
  *
  */
 @Transactional
-public interface PurchaseorderRepository extends JpaRepository<Purchaseorder, Long>{
+public interface PurchaseorderRepository extends JpaRepository<Purchaseorder, String>{
 
 }
