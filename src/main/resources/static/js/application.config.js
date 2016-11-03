@@ -28,6 +28,12 @@ angular
 										controller : 'employeeCtrl'
 									})
 							.when(
+									'/purchaseorders',
+									{
+										templateUrl : 'js/components/purchaseorders/purchaseorder.component.html',
+										controller : 'purchaseorderCtrl'
+									})
+							.when(
 									'/certificates',
 									{
 										templateUrl : 'js/components/certificates/certificate.component.html',

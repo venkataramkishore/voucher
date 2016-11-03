@@ -25,27 +25,27 @@ public class PurchaseorderServiceImpl implements PurchaseorderService {
 
 	
 	@Autowired
-	private PurchaseorderRepository PurchaseorderRepo;
+	private PurchaseorderRepository purchaseorderRepo;
 	
 	/* (non-Javadoc)
 	 * @see com.sogeti.voucher.services.PurchaseorderService#create(com.sogeti.voucher.models.Purchaseorder)
 	 */
 	@Override
 	public Purchaseorder create(Purchaseorder emp) {
-		return this.PurchaseorderRepo.save(emp);
+		return this.purchaseorderRepo.save(emp);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.sogeti.voucher.services.PurchaseorderService#delete(int)
 	 */
 	@Override
-	public Purchaseorder delete(Long id) throws Exception {
-		Purchaseorder deletedPurchaseorder = this.PurchaseorderRepo.findOne(id);
+	public Purchaseorder delete(String code) throws Exception {
+		Purchaseorder deletedPurchaseorder = this.purchaseorderRepo.findOne(code);
         
         if (deletedPurchaseorder == null)
-            throw new Exception("No Purchaseorder with id : " + id);
+            throw new Exception("No Purchaseorder with id : " + code);
          
-        this.PurchaseorderRepo.delete(deletedPurchaseorder);
+        this.purchaseorderRepo.delete(deletedPurchaseorder);
         return deletedPurchaseorder;
 	}
 
@@ -54,7 +54,7 @@ public class PurchaseorderServiceImpl implements PurchaseorderService {
 	 */
 	@Override
 	public List<Purchaseorder> findAll() {
-		return this.PurchaseorderRepo.findAll();
+		return this.purchaseorderRepo.findAll();
 	}
 
 	/* (non-Javadoc)
@@ -74,8 +74,11 @@ public class PurchaseorderServiceImpl implements PurchaseorderService {
 	 * @see com.sogeti.voucher.services.PurchaseorderService#findById(int)
 	 */
 	@Override
-	public Purchaseorder findById(Long id) {
-		return this.PurchaseorderRepo.findOne(id);
+	public Purchaseorder findByCode(String id) {
+		return this.purchaseorderRepo.findOne(id);
 	}
-
+	
+	public Purchaseorder findByPO(String pocode, String orderdate) {
+		return null;
+	}
 }
