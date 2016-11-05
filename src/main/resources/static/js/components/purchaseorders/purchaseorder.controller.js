@@ -1,4 +1,4 @@
-angular.module("purchaseorderModule").controller("purchaseorderCtrl", ['$scope','purchaseorderService', function($scope, purchaseorderService){
+angular.module("purchaseorderModule").controller("purchaseorderCtrl", ['$scope', '$location', 'purchaseorderService', function($scope, $location, purchaseorderService){
 	
 	$scope.purchaseorderList = [];
 	$scope.selectedPOrder=null;
@@ -23,16 +23,24 @@ angular.module("purchaseorderModule").controller("purchaseorderCtrl", ['$scope',
 	};
 	
 	$scope.exportXLSData = function () {
-        var blob = new Blob([document.getElementById('exportable').innerHTML], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-        });
-        saveAs(blob, $scope.selectedPOrder.code+"-"+$scope.selectedPOrder.orderdate+".xls");
+		var absUrl = $location.absUrl().substring(0, $location.absUrl().indexOf('#'));
+		console.log(absUrl);
+		window.open(absUrl+ '/povouchersxls/'+$scope.selectedPOrder.code+'/'+$scope.selectedPOrder.orderdate);
+		/*purchaseorderService.exportXLSData($scope.selectedPOrder.code,  $scope.selectedPOrder.orderdate)
+        .then(function (data, status, headers, config) {
+            var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+            var objectUrl = URL.createObjectURL(blob);
+            window.open(absUrl+ '/povouchersxls/'+code+'/'+orderDate);
+        },function (data, status, headers, config) {
+            //upload failed
+        });*/
     };
+    
     $scope.exportPDFData = function () {
-        var blob = new Blob([document.getElementById('exportable').innerHTML], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-        });
-        saveAs(blob, $scope.selectedPOrder.code+"-"+$scope.selectedPOrder.orderdate+".pdf");
+    	var absUrl = $location.absUrl().substring(0, $location.absUrl().indexOf('#'));
+		console.log(absUrl);
+		window.open(absUrl+ '/povoucherspdf/'+$scope.selectedPOrder.code+'/'+$scope.selectedPOrder.orderdate);
+		
     };
     
 	$scope.fetchPurchaseorderList = function() {
