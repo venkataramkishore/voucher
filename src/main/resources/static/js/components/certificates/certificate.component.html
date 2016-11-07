@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-4">
-			<certificate-form certificate="currCertificate" administrators="administrators"></certificate-form>
+			<certificate-form edit-opr="editOpr" certificate="currCertificate" company-list="companyList" ></certificate-form>
 		</div>
 		<div class="col-md-8">
 			<!--  table panel starts -->
@@ -21,6 +21,7 @@
 								<th>Name</th>
 								<th>Passing Score</th>
 								<th>Status</th>
+								<th>Company</th>
 								<th>Edit/Del</th>
 							</tr>
 						</thead>
@@ -37,8 +38,9 @@
 								<td>{{certificate.name}}</td>
 								<td>{{certificate.passingscore}}</td>
 								<td>{{certificate.status}}</td>
-								<td><a href="#" class="btn btn-primary btn-sm"><i class="fa fa-pencil fa-fw"></i></a> <a
-									href="#" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-fw"></i></a></td>
+								<td>{{certificate.company.name}}</td>
+								<td><a class="btn btn-primary btn-sm" data-ng-click="editCertificate(certificate)"><i class="fa fa-pencil fa-fw"></i></a> <!-- <a
+									class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-fw"></i></a> --></td>
 							</tr>
 						</tbody>
 					</table>

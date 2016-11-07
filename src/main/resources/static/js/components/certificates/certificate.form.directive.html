@@ -2,37 +2,41 @@
 	<!-- Default panel contents -->
 	<div class="panel-heading">Certificate</div>
 	<div class="panel-body">
-		<form novalidate="novalidate">
-			<div class="form-group">
-				<label for="abbreviation">Abbreviation</label> <input type="text" pattern="[A-Z]"
-					class="form-control" id="abbreviation" data-ng-model="currCertificate.abbreviation" required
+		<form novalidate="novalidate" name="certificateForm">
+			<div class="form-group" data-ng-class="{ 'has-error' : certificateForm.abbreviation.$invalid && !certificateForm.abbreviation.$pristine }">
+				<label for="abbreviation">Abbreviation</label> <input type="text" name="abbreviation"
+					class="form-control" id="abbreviation" data-ng-model="certificate.abbreviation" required
 					placeholder="Abbreviation" maxlength="10">
 			</div>
-			<div class="form-group">
-				<label for="abbreviation">Code</label> <input type="text" pattern="\w"
-					class="form-control" id="code" data-ng-model="currCertificate.code" required
+			<div class="form-group" data-ng-class="{ 'has-error' : certificateForm.code.$invalid && !certificateForm.code.$pristine }">
+				<label for="abbreviation">Code</label> <input type="text" name="code"
+					class="form-control" id="code" data-ng-model="certificate.code" required
 					placeholder="Code" maxlength="20">
 			</div>
-			<div class="form-group">
-				<label for="name">Name</label> <input type="text" class="form-control"
-					id="name" data-ng-model="currCertificate.name" required
-					placeholder="Name" pattern="\w+" maxlength="100">
+			<div class="form-group" data-ng-class="{ 'has-error' : certificateForm.name.$invalid && !certificateForm.name.$pristine }">
+				<label for="name">Name</label> <input type="text" class="form-control" name="name"
+					id="name" data-ng-model="certificate.name" required
+					placeholder="Name" maxlength="100">
 			</div>
-			<div class="form-group">
-				<label for="passingscore">Passing Score</label> <input
-					type="number" min="1" max="100" class="form-control" id="passingscore" pattern="[0-9]" required
-					data-ng-model="currCertificate.passingscore" placeholder="Default value">
+			<div class="form-group" data-ng-class="{ 'has-error' : certificateForm.passingscore.$invalid && !certificateForm.passingscore.$pristine }">
+				<label for="passingscore">Passing Score</label> <input name="passingscore"
+					type="number" min="1" max="100" class="form-control" id="passingscore" required
+					data-ng-model="certificate.passingscore" placeholder="Default value">
 			</div>
-			<div class="form-group">
-				<label for="active">Status</label> <select id="status" data-ng-model="currCertificate.status"
-					class="form-control" required>
-					<option selected>--Select--</option>
-					<option value="Active">Active</option>
-					<option value="Inactive">Inactive</option>
+			<div class="form-group" data-ng-class="{ 'has-error' : certificateForm.status.$invalid && !certificateForm.status.$pristine }">
+				<label for="active">Status</label>
+				<select data-ng-model="certificate.status" class="form-control" required name="status"
+						data-ng-options="item.value as item.key for item in statusList"></select>
+			</div>
+			<div class="form-group" data-ng-class="{ 'has-error' : certificateForm.company.$invalid && !certificateForm.company.$pristine }">
+				<label for="active">Company</label>
+				<select data-ng-model="certificate.companyId" name="company" class="form-control" required
+						data-ng-options="comp.id as comp.name for comp in companyList">
 				</select>
 			</div>
-			<button type="button" class="btn btn-default">Cancel</button>
-			<button type="submit" class="btn btn-primary">Add</button>
+			<button type="button" class="btn btn-default" data-ng-click="reset()">Cancel</button>
+			<button type="submit" class="btn btn-primary" data-ng-show="!editOpr" data-ng-disabled="certificateForm.$invalid" data-ng-click="create()">Add</button>
+			<button type="submit" class="btn btn-primary" data-ng-show="editOpr" data-ng-disabled="certificateForm.$invalid" data-ng-click="update()">Update</button>
 		</form>
 	</div>
 </div>

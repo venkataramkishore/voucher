@@ -45,7 +45,6 @@ public class Certificate implements Serializable {
 	private String status;
 
 	//bi-directional many-to-one association to Company
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="company_id", nullable=false)
 	private Company company;

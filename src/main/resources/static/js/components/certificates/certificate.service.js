@@ -7,7 +7,7 @@ angular.module("certificateModule").service("certificateService", ['$http', func
 	};
 	
 	self.saveCertificate = function (data) {
-		return $http.post("./certificates", data);
+		return $http.post("./certificate", data);
 	};
 	
 	self.getCertificate = function ( compId ) {
@@ -15,10 +15,6 @@ angular.module("certificateModule").service("certificateService", ['$http', func
 	};
 	
 	self.updateCertificate = function (data) {
-		return $http.put("./update", data);
-	};
-	
-	self.saveCertificate = function (data) {
-		return $http.post("./certificates", data);
+		return $http.put("./certificate", data);
 	};
 }]);

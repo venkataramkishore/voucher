@@ -35,6 +35,11 @@ public class CompanyServiceImpl implements CompanyService {
 		return this.companyRepo.save(emp);
 	}
 
+	@Override
+	public List<Company> findActiveCompanies() throws Exception {
+		return this.companyRepo.findActiveCompanies();
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.sogeti.voucher.services.CompanyService#delete(int)
 	 */

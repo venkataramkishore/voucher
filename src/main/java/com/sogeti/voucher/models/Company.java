@@ -39,7 +39,6 @@ public class Company implements Serializable {
 	private List<Certificate> certificates;
 
 	//bi-directional many-to-one association to Employee
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="administrator_id", nullable=false)
 	private Employee employee;

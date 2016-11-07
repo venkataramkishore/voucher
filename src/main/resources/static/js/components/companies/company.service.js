@@ -14,6 +14,9 @@ angular.module("companyModule").service("companyService", ['$http', function($ht
 		return $http.get("./company/"+compId);
 	};
 	
+	self.getActiveCompanies = function(){
+		return $http.get('./activecompanies');
+	}
 	self.updateCompany = function (data) {
 		return $http.put("./update", data);
 	};
