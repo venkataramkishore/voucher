@@ -38,7 +38,8 @@ angular
 									{
 										templateUrl : 'js/components/certificates/certificate.component.html',
 										controller : 'certificateCtrl'
-									}).when('/login', {
+									})
+							.when('/login', {
 								templateUrl : 'login.html',
 								controller : 'navigation',
 								controllerAs : 'controller'

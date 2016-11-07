@@ -1,1 +1,1 @@
-angular.module("certificateModule", ['ui.bootstrap']);
+angular.module("certificateModule", ['ui.bootstrap','ngAnimate', 'toastr']);

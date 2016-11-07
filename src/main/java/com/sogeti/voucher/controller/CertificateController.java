@@ -6,6 +6,7 @@ package com.sogeti.voucher.controller;
 import java.util.Objects;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.voucher.models.Certificate;
+import com.sogeti.voucher.models.Company;
 import com.sogeti.voucher.services.CertificateService;
+import com.sogeti.voucher.services.CompanyService;
+import com.sogeti.voucher.ui.models.UICertificate;
 import com.sogeti.voucher.util.VoucherConstants;
 import com.sogeti.voucher.util.VoucherResponse;
 
@@ -31,6 +35,9 @@ public class CertificateController {
 	
 	@Autowired
 	private CertificateService  certificateService;
+	
+	@Autowired
+	private CompanyService companyService;
 	
     @GetMapping("/certificates")
     public VoucherResponse certificateList() {
@@ -48,6 +55,25 @@ public class CertificateController {
 			voucherResponse.setFailureResponse(e.getMessage());
 		}
 		logger.info("Exiting certificateList method ");
+        return voucherResponse;
+    }
+    
+    @GetMapping("/activecertificates")
+    public VoucherResponse getActiveCertificates() {
+    	logger.info("Inside getActiveCertificates method ");
+        VoucherResponse voucherResponse;
+		try {
+			Iterable<Certificate> empList = this.certificateService.findAll();
+			voucherResponse = new VoucherResponse();
+			voucherResponse.setStatus(VoucherConstants.SUCCESS);
+			voucherResponse.setSuccessResponse(empList);
+		} catch (Exception e) {
+			logger.error("Unable to find active certificates with error ", e);
+			voucherResponse = new VoucherResponse();
+			voucherResponse.setStatus(VoucherConstants.FAILURE);
+			voucherResponse.setFailureResponse(e.getMessage());
+		}
+		logger.info("Exiting getActiveCertificates method ");
         return voucherResponse;
     }
     
@@ -71,29 +97,40 @@ public class CertificateController {
     }
     
     @PostMapping("/certificate")
-    public VoucherResponse savecertificate(@RequestBody Certificate certificate) {
-    	logger.info("Inside getcertificate method ");
+    public VoucherResponse savecertificate(@RequestBody UICertificate uiCertificate) {
+    	logger.info("Inside savecertificate method ");
         VoucherResponse voucherResponse;
         try {
-			Certificate comp = this.certificateService.create(certificate);
+        	
+			Certificate certificate = new Certificate();
+			BeanUtils.copyProperties(uiCertificate, certificate);
+			Company company = this.companyService.findById(uiCertificate.getCompanyId());
+			certificate.setCompany(company);
+			
+			this.certificateService.create(certificate);
 			voucherResponse = new VoucherResponse();
 			voucherResponse.setStatus(VoucherConstants.SUCCESS);
-			voucherResponse.setSuccessResponse(comp);
+			voucherResponse.setSuccessResponse(certificate);
 		} catch (Exception e) {
 			logger.error("Unable to find certificate with error ", e);
 			voucherResponse = new VoucherResponse();
 			voucherResponse.setStatus(VoucherConstants.FAILURE);
 			voucherResponse.setFailureResponse("Not able to create certificate ");
 		}
-        logger.info("Exiting getcertificate method ");
+        logger.info("Exiting savecertificate method ");
         return voucherResponse;
     } 
     @PutMapping("/certificate")
-    public VoucherResponse updatecertificate(@RequestBody Certificate certificate) {
-    	logger.info("Inside getcertificate method ");
+    public VoucherResponse updatecertificate(@RequestBody UICertificate uiCertificate) {
+    	logger.info("Inside updatecertificate method ");
         VoucherResponse voucherResponse;
         try {
-			Certificate param = this.certificateService.update(certificate);
+        	Certificate cert = this.certificateService.findById(uiCertificate.getId());
+        	BeanUtils.copyProperties(uiCertificate, cert);
+        	Company company = this.companyService.findById(uiCertificate.getCompanyId());
+			cert.setCompany(company);
+			
+			Certificate param = this.certificateService.update(cert);
 			voucherResponse = new VoucherResponse();
 			voucherResponse.setStatus(VoucherConstants.SUCCESS);
 			voucherResponse.setSuccessResponse(param);
@@ -101,9 +138,9 @@ public class CertificateController {
 			logger.error("Unable to find certificate with error ", e);
 			voucherResponse = new VoucherResponse();
 			voucherResponse.setStatus(VoucherConstants.FAILURE);
-			voucherResponse.setFailureResponse("Not able to create certificate ");
+			voucherResponse.setFailureResponse("Not able to update certificate ");
 		}
-        logger.info("Exiting getcertificate method ");
+        logger.info("Exiting updatecertificate method ");
         return voucherResponse;
     } 
     

@@ -15,6 +15,7 @@ public interface CompanyService {
 
 	public Company create(Company emp);
     public List<Company> findAll();
+    public List<Company> findActiveCompanies() throws Exception;
     public Company update(Company Company) throws Exception;
     public Company findById(Long id);
     public List<Company> findByStatus(String username) throws Exception;

@@ -51,6 +51,25 @@ public class CompanyController {
         return voucherResponse;
     }
     
+    @GetMapping("/activecompanies")
+    public VoucherResponse getActiveCompanies() {
+    	logger.info("Inside getActiveCompanies method ");
+        VoucherResponse voucherResponse;
+		try {
+			Iterable<Company> empList = this.companyService.findActiveCompanies();
+			voucherResponse = new VoucherResponse();
+			voucherResponse.setStatus(VoucherConstants.SUCCESS);
+			voucherResponse.setSuccessResponse(empList);
+		} catch (Exception e) {
+			logger.error("Unable to find companies with error ", e);
+			voucherResponse = new VoucherResponse();
+			voucherResponse.setStatus(VoucherConstants.FAILURE);
+			voucherResponse.setFailureResponse(e.getMessage());
+		}
+		logger.info("Exiting getActiveCompanies method ");
+        return voucherResponse;
+    }
+    
     @GetMapping("/company/{compId}")
     public VoucherResponse getCompany(@PathVariable("compId") Long companyId) {
     	logger.info("Inside getCompany method ");
