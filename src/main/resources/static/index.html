@@ -12,7 +12,7 @@
 <link href="css/angular-bootstrap.css" rel="stylesheet">
 </head>
 <body data-ng-app="voucherApp">
-	<nav class="navbar navbar-inverse" data-ng-controller="navigation as nav">
+	<nav class="navbar navbar-default" data-ng-controller="navigation as nav">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -23,7 +23,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#/home"> <img alt="Sogeti"
+				<a class="navbar-brand" href="#/home"> <img alt="Sogeti" style="margin:-10px"
 					src="./images/logo.png">
 				</a>
 			</div>
@@ -32,30 +32,31 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#/home"><i
-							class="fa fa-home" aria-hidden="true"></i> Home <span
-							class="sr-only">(current)</span></a></li>
+							class="fa fa-home" aria-hidden="true"></i> Home </a></li>
+					<li><a href="#/myoverview"><i
+							class="fa fa-book" aria-hidden="true"></i> My Overview </a></li>
 					<li data-ng-show="!authenticated"><a href="#/login"><i class="fa fa-sign-in"
 							aria-hidden="true"></i> login</a></li>
 					<li class="dropdown"><a  class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">Manage <span class="caret"></span></a>
+						aria-expanded="false"><i class="fa fa-cog fa-fw"></i>  Manage <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="#/parameters"><i class="fa fa-pencil fa-fw"></i>
 									Application Paramaters</a></li>
-							<li><a href="#/companies"><i class="fa fa-trash-o fa-fw"></i>
+							<li><a href="#/companies"><i class="fa fa-globe fa-fw"></i>
 									Companies</a></li>
-							<li><a href="#/employees"><i class="fa fa-ban fa-fw"></i>
+							<li><a href="#/employees"><i class="fa fa-users fa-fw"></i>
 									Employees</a></li>
-							<li><a href="#/certificates"><i class="fa fa-ban fa-fw"></i>
+							<li><a href="#/certificates"><i class="fa fa-certificate fa-fw"></i>
 									Certificates</a></li>
 							<li><a href="#/purchaseorders"><i
-									class="fa fa-ban fa-fw"></i> Purchase Orders</a></li>
-							<li><a href="#/vouchers"><i class="fa fa-ban fa-fw"></i>
+									class="fa fa-cart-arrow-down fa-fw"></i> Purchase Orders</a></li>
+							<li><a href="#/vouchers"><i class="fa fa-folder-open fa-fw"></i>
 									Vouchers</a></li>
 							<li><a href="#/emailtemplates"><i
-									class="fa fa-ban fa-fw"></i> E-mail Templates</a></li>
+									class="fa fa-envelope-o fa-fw"></i> E-mail Templates</a></li>
 							<li class="divider"></li>
-							<li><a href="#/addemployee"><i class="fa fa-unlock"></i>
+							<li><a href="#/addemployee"><i class="fa fa-user-plus fa-fw"></i>
 									Add Employee</a></li>
 						</ul></li>
 				</ul>
@@ -85,6 +86,9 @@
 	<script src="js/application.controller.js"></script>
 	<script src="js/application.config.js"></script>
 	<script src="js/hello.js"></script>
+	<script src="js/components/home/home.module.js"></script>
+	<script src="js/components/home/home.service.js"></script>
+	<script src="js/components/home/home.controller.js"></script>
 	<script src="js/components/companies/company.module.js"></script>
 	<script src="js/components/companies/company.service.js"></script>
 	<script src="js/components/companies/company.controller.js"></script>

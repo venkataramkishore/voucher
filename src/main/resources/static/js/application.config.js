@@ -5,9 +5,8 @@ angular
 
 					$routeProvider
 							.when('/', {
-								templateUrl : 'home.html',
-								controller : 'home',
-								controllerAs : 'controller'
+								templateUrl : 'js/components/home/home.component.html',
+								controller : 'homeCtrl',
 							})
 							.when(
 									'/companies',

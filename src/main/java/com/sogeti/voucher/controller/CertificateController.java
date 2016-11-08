@@ -3,6 +3,8 @@
  */
 package com.sogeti.voucher.controller;
 
+import java.security.Principal;
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.log4j.Logger;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.voucher.models.Certificate;
 import com.sogeti.voucher.models.Company;
+import com.sogeti.voucher.models.Employee;
 import com.sogeti.voucher.services.CertificateService;
 import com.sogeti.voucher.services.CompanyService;
+import com.sogeti.voucher.services.EmployeeService;
 import com.sogeti.voucher.ui.models.UICertificate;
 import com.sogeti.voucher.util.VoucherConstants;
 import com.sogeti.voucher.util.VoucherResponse;
@@ -39,15 +43,18 @@ public class CertificateController {
 	@Autowired
 	private CompanyService companyService;
 	
+	@Autowired
+	private EmployeeService empService;
+	
     @GetMapping("/certificates")
     public VoucherResponse certificateList() {
     	logger.info("Inside certificateList method ");
         VoucherResponse voucherResponse;
 		try {
-			Iterable<Certificate> empList = this.certificateService.findAll();
+			Iterable<Certificate> certificateList = this.certificateService.findAll();
 			voucherResponse = new VoucherResponse();
 			voucherResponse.setStatus(VoucherConstants.SUCCESS);
-			voucherResponse.setSuccessResponse(empList);
+			voucherResponse.setSuccessResponse(certificateList);
 		} catch (Exception e) {
 			logger.error("Unable to find certificates with error ", e);
 			voucherResponse = new VoucherResponse();
@@ -63,10 +70,10 @@ public class CertificateController {
     	logger.info("Inside getActiveCertificates method ");
         VoucherResponse voucherResponse;
 		try {
-			Iterable<Certificate> empList = this.certificateService.findAll();
+			Iterable<Certificate> certificateList = this.certificateService.findAll();
 			voucherResponse = new VoucherResponse();
 			voucherResponse.setStatus(VoucherConstants.SUCCESS);
-			voucherResponse.setSuccessResponse(empList);
+			voucherResponse.setSuccessResponse(certificateList);
 		} catch (Exception e) {
 			logger.error("Unable to find active certificates with error ", e);
 			voucherResponse = new VoucherResponse();
@@ -164,5 +171,24 @@ public class CertificateController {
 		}
         logger.info("Exiting deletecertificate method ");
         return voucherResponse;
+    }
+    @GetMapping("/issuecertificates")
+    public VoucherResponse getIssuedCertificates(Principal user) {
+    	logger.info("Inside getIssuedCertificates method with "+ user.getName());
+    	 VoucherResponse voucherResponse = new VoucherResponse();
+         try {
+        	 Employee emp = this.empService.findByUsername(user.getName());
+        	 if(!Objects.isNull(emp)){
+        		List<Certificate>  certList = this.certificateService.getIssuedCertificates("ISSUED", emp);
+      			voucherResponse.setStatus(VoucherConstants.SUCCESS);
+      			voucherResponse.setSuccessResponse(certList);
+        	 }
+ 		} catch (Exception e) {
+ 			logger.error("Unable to delete certificate with error ", e);
+ 			voucherResponse.setStatus(VoucherConstants.FAILURE);
+ 			voucherResponse.setFailureResponse("Unable to find issued certificates");
+ 		}
+         logger.info("Exiting getIssuedCertificates method ");
+         return voucherResponse;
     }
 }

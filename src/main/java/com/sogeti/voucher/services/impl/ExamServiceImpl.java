@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sogeti.voucher.enums.ExamStatus;
+import com.sogeti.voucher.models.Employee;
 import com.sogeti.voucher.models.Exam;
 import com.sogeti.voucher.repositories.ExamRepository;
 import com.sogeti.voucher.services.ExamService;
@@ -76,6 +78,11 @@ public class ExamServiceImpl implements ExamService {
 	@Override
 	public Exam findById(Long id) {
 		return this.ExamRepo.findOne(id);
+	}
+
+	@Override
+	public List<Exam> findByEmployeeAndStatus(Employee employee, List<String> status) {
+		return this.ExamRepo.findByEmployeeAndStatus(employee, status);
 	}
 
 }

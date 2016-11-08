@@ -1,1 +1,1 @@
-angular.module("voucherApp", [ 'ngRoute', 'ui.bootstrap', 'companyModule', 'parameterModule', 'certificateModule', 'employeeModule', 'purchaseorderModule' ]);
+angular.module("voucherApp", [ 'ngRoute', 'ui.bootstrap', 'companyModule', 'parameterModule', 'certificateModule', 'employeeModule', 'purchaseorderModule', 'homeModule' ]);
