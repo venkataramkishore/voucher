@@ -1,0 +1,70 @@
+<div class="well well-lg">
+	<div class="row">
+		<div class="col-md-6">
+
+			<div class="panel panel-primary">
+			
+				<div class="panel-heading">Request Voucher</div>
+				<div class="panel-body">
+					<form novalidate="novalidate">
+						<div class="form-group">
+							<label for="certificate">Certificate</label> 
+							<select id="certificateid" data-ng-model="certificate"
+									data-ng-options='certificate.id as (certificate.company.name + " - " + certificate.code + " - " + certificate.abbreviation) for certificate in certificateList'
+								class="form-control" required>
+								<option value="-1">--Select--</option>
+							</select>
+							
+							<label for="examdate">Exam Date (maximal two weeks in advance, dd-MM-yyyy)</label> 
+						      <div class="col-md-6">
+						        <p class="input-group">
+						          <input type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
+						          <span class="input-group-btn">
+						            <button type="button" class="btn btn-default" ng-click="open1()"><i class="fa fa-calculator" aria-hidden="true"></i></button>
+						          </span>
+						        </p>
+						      </div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+
+			<div class="panel panel-primary">
+			
+				<div class="panel-heading">My Pending Exams</div>
+				<div class="panel-body">
+					<!-- Table -->
+					<div class="table-responsive">
+					<table class="table table-striped table-condensed table-hover table-bordered">
+						<thead>
+							<tr>
+								<th>Exam Code</th>
+								<th>Certificate</th>
+								<th>Exam Date</th>
+								<th>Voucher</th>
+							</tr>
+						</thead>
+						<tbody data-ng-if="certificateList.length==0">
+							<tr>
+								<td colspan="4">No certificate(s) to show.</td>
+							</tr>
+						</tbody>
+						<tbody data-ng-if="certificateList.length>0"
+							data-ng-repeat="certificate in certificateList.slice(((currentPage-1)*maxSize), ((currentPage)*maxSize)) | filter:search ">
+							<tr>
+								<td>{{certificate.abbreviation}}</td>
+								<td>{{certificate.code}}</td>
+								<td>{{certificate.name}}</td>
+								<td>{{certificate.passingscore}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<ul data-uib-pagination data-total-items="certificateList.length" data-ng-model="currentPage" data-ng-change="pageChanged()"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

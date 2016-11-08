@@ -5,12 +5,14 @@ package com.sogeti.voucher.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sogeti.voucher.models.Certificate;
+import com.sogeti.voucher.models.Employee;
 import com.sogeti.voucher.repositories.CertificateRepository;
 import com.sogeti.voucher.services.CertificateService;
 
@@ -31,8 +33,8 @@ public class CertificateServiceImpl implements CertificateService {
 	 * @see com.sogeti.voucher.services.CertificateService#create(com.sogeti.voucher.models.Certificate)
 	 */
 	@Override
-	public Certificate create(Certificate emp) {
-		return this.CertificateRepo.save(emp);
+	public Certificate create(Certificate certificate) {
+		return this.CertificateRepo.save(certificate);
 	}
 
 	/* (non-Javadoc)
@@ -66,7 +68,8 @@ public class CertificateServiceImpl implements CertificateService {
         
         if (updatedCertificate == null)
             throw new Exception("No Certificate with id : "+Certificate.getId());
-         
+         BeanUtils.copyProperties(Certificate, updatedCertificate);
+        this.CertificateRepo.save(updatedCertificate);
         return updatedCertificate;
 	}
 
@@ -78,4 +81,8 @@ public class CertificateServiceImpl implements CertificateService {
 		return this.CertificateRepo.findOne(id);
 	}
 
+	@Override
+	public List<Certificate> getIssuedCertificates(String status, Employee employee) {
+		return this.CertificateRepo.getIssuedCertificates(status, employee);
+	}
 }
