@@ -1,25 +1,37 @@
-<div class="panel panel-primary">
-	<!-- Default panel contents -->
-	<div class="panel-heading">Parameter</div>
-	<div class="panel-body">
-		<form novalidate="novalidate">
-			<div class="form-group">
-				<label for="companyname">Parameter Name</label> <input type="text"
-					class="form-control" id="key" data-ng-model="key" required
-					placeholder="Parameter Name">
-			</div>
-			<div class="form-group">
-				<label for="voucherThreshold">Value</label> <input type="text" class="form-control"
-					id="voucherThreshold" data-ng-model="value" required
-					placeholder="Voucher Threshold" pattern="\w+">
-			</div>
-			<div class="form-group">
-				<label for="coachemail">Default value</label> <input
-					type="text" class="form-control" id="defaultvalue" pattern="\w+" required
-					data-ng-model="defaultvalue" placeholder="Default value">
-			</div>
-			<button type="button" class="btn btn-default">Cancel</button>
-			<button type="submit" class="btn btn-primary">Add</button>
-		</form>
-	</div>
-</div>
+<form novalidate="novalidate" name="paramForm" layout-padding>
+	<div class="md-title">Parameter</div>
+	<md-padding layout="column" data-layout-align="center strech">
+		<md-input-container> <label for="companyname">Parameter
+			Name</label> <input id="key" data-ng-model="parameter.key" required name="key"
+			placeholder="Parameter Name">
+		<div data-ng-messages="paramForm.key.$error">
+			<div data-ng-message="required">This is required!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <label
+			for="voucherThreshold">Value</label> <input id="voucherThreshold"
+			name="voucherThreshold" data-ng-model="parameter.value" required
+			placeholder="Voucher Threshold">
+		<div data-ng-messages="paramForm.voucherThreshold.$error">
+			<div data-ng-message="required">This is required!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <label for="coachemail">Default
+			value</label> <input id="defaultvalue" required name="defaultvalue"
+			data-ng-model="parameter.defaultvalue" placeholder="Default value">
+		<div data-ng-messages="paramForm.defaultvalue.$error">
+			<div data-ng-message="required">This is required!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <md-button
+			class="md-primary" data-ng-click="reset()">Cancel</md-button> <md-button
+			class="md-primary" data-ng-show="!editOpr"
+			data-ng-disabled="paramForm.$invalid" data-ng-click="create()"
+			data-ng-class="{'md-raised md-hue-1': (paramForm.$dirty && paramForm.$valid) }"
+			aria-label="Create Parameter">Add</md-button> <md-button
+			class="md-primary" data-ng-show="editOpr"
+			data-ng-disabled="paramForm.$invalid" data-ng-click="update()"
+			data-ng-class="{'md-raised md-hue-1': (paramForm.$dirty && paramForm.$valid) }"
+			aria-label="Update Paramemter">Update</md-button> </md-input-container>
+	</md-padding>
+</form>

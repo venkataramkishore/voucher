@@ -1,64 +1,28 @@
-<nav class="navbar navbar-default"
-	data-ng-controller="navigation as nav">
-	<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#"> <img alt="Sogeti"
-				src="./images/logo.png">
-			</a>
+<md-toolbar>
+      <div class="md-toolbar-tools" layout-align="start center">
+        <div class="md-title"><img alt="" src="./images/logo.png"> </div>
+		 <md-menu-bar data-ng-repeat="menu in menuList" > 
+				<md-list>
+					<md-list-item data-ng-if="menu.dropdown && menu.expose"> 
+						<md-menu>
+							<md-button ng-click="$mdOpenMenu()">
+								<i class="{{menu.iconTag}}" aria-hidden="true"></i> {{menu.name}}
+							</md-button>
+							<md-menu-content> 
+								<md-menu-item ng-repeat="dropmenu in menu.dropdownItems"> 
+									<md-button href="{{dropmenu.link}}">
+										<i class="{{dropmenu.iconTag}}" aria-hidden="true"></i> {{dropmenu.name}}
+									</md-button>
+								</md-menu-item>
+							</md-menu-content> 
+						</md-menu> 
+					</md-list-item> 
+					<md-list-item data-ng-if="!menu.dropdown && menu.expose">
+						<md-button href="{{menu.link}}" aria-label="{{menu.name}}">
+							<i class="{{menu.iconTag}}" aria-hidden="true"></i> {{menu.name}}
+						</md-button> 
+					</md-list-item> 
+				</md-list>
+				</md-menu-bar>
 		</div>
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="#/home"><i class="fa fa-home"
-						aria-hidden="true"></i> Home <span class="sr-only">(current)</span></a></li>
-				<li data-ng-show="!authenticated"><a href="#/login"><i
-						class="fa fa-sign-in" aria-hidden="true"></i> login</a></li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown" role="button" aria-haspopup="true"
-					aria-expanded="false">Manage <span class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="#/parameters"><i class="fa fa-pencil fa-fw"></i>
-								Application Paramaters</a></li>
-						<li><a href="#/companies"><i class="fa fa-trash-o fa-fw"></i>
-								Companies</a></li>
-						<li><a href="#/employees"><i class="fa fa-ban fa-fw"></i>
-								Employees</a></li>
-						<li><a href="#/certificates"><i class="fa fa-ban fa-fw"></i>
-								Certificates</a></li>
-						<li><a href="#/purchaseorders"><i class="fa fa-ban fa-fw"></i>
-								Purchase Orders</a></li>
-						<li><a href="#/vouchers"><i class="fa fa-ban fa-fw"></i>
-								Vouchers</a></li>
-						<li><a href="#/emailtemplates"><i class="fa fa-ban fa-fw"></i>
-								E-mail Templates</a></li>
-						<li class="divider"></li>
-						<li><a href="#/addemployee"><i class="fa fa-unlock"></i>
-								Add Employee</a></li>
-					</ul></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li data-ng-show="authenticated" class="dropdown"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown" role="button"
-					aria-haspopup="true" aria-expanded="false">{{user.username}} <span
-						class="caret"></span></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">{{user.authority}}</a></li>
-						<li role="separator" class="divider"></li>
-						<li data-ng-show="authenticated"><a href="#"
-							data-ng-click="nav.logout()">logout</a></li>
-					</ul></li>
-			</ul>
-		</div>
-		<!-- /.navbar-collapse -->
-	</div>
-	<!-- /.container-fluid -->
-</nav>
+    </md-toolbar>

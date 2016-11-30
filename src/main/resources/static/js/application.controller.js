@@ -1,8 +1,6 @@
-angular.module("voucherApp").controller('navigation', [ '$rootScope', '$http', '$location', function($rootScope, $http, $location) {
-
-	  var self = this
-
-	  var authenticate = function(credentials, callback) {
+angular.module("voucherApp").controller('navigation', [ '$scope', '$rootScope', '$http', '$location', function($scope, $rootScope, $http, $location) {
+	
+	var authenticate = function(credentials, callback) {
 
 	    var headers = credentials ? {authorization : "Basic "
 	        + btoa(credentials.username + ":" + credentials.password)
@@ -22,9 +20,9 @@ angular.module("voucherApp").controller('navigation', [ '$rootScope', '$http', '
 
 	  }
 
-	  authenticate();
+	  //authenticate();
 	  self.credentials = {};
-	  self.login = function() {
+	  $scope.login = function() {
 	      authenticate(self.credentials, function() {
 	        if ($rootScope.authenticated) {
 	          $location.path("/");
@@ -36,11 +34,4 @@ angular.module("voucherApp").controller('navigation', [ '$rootScope', '$http', '
 	      });
 	  };
 	  
-	  self.logout = function() {
-		  $http.post('logout', {}).finally(function() {
-		    $rootScope.authenticated = false;
-		    $location.path("/login");
-		  });
-		};
-		
-	}]);
+}]);

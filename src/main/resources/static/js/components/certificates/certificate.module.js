@@ -1,1 +1,1 @@
-angular.module("certificateModule", ['ui.bootstrap','ngAnimate', 'toastr']);
+angular.module("certificateModule", ['ngMaterial','ngAnimate', 'md.data.table']);

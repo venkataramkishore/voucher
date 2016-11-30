@@ -1,0 +1,122 @@
+<div data-layout="column" data-layout-align="start strech">
+<div class="md-whiteframe-z2" data-layout-margin>
+<md-toolbar class="md-toolbar-tools md-warn" data-layout="row" data-layout-align="space-between stretch">
+    <h4>Team Pending exam list</h4>
+    <md-input-container> <label>Company</label> 
+    <md-select name="company" required data-ng-model="selectedCompany" data-ng-change="changeCompany()">
+    	<md-option value="*">All</md-option>
+		<md-option data-ng-repeat="company in companyList" 	ng-value="company">{{company.name}}</md-option> 
+	</md-select>
+	</md-input-container>
+   	<md-input-container>
+   	<label for="filter">Search</label>
+   	<input name="filter" id="filter" data-ng-model="query.filter">
+	</md-input-container>
+</md-toolbar>
+<p data-ng-show="pendingExamList.length==0">No record(s) to show.</p>
+<md-table-container data-ng-show="pendingExamList.length>0" >
+  <table data-md-table>
+    <thead data-md-head data-md-order="query.order" data-md-on-reorder="pendingExamList">
+      <tr data-md-row class="md-warn">
+        <th data-md-column data-md-order-by="firstname"><span>Employee</span></th>
+        <th data-md-column data-md-order-by="certificate.abbreviation"><span>Certificate</span></th>
+        <th data-md-column data-md-order-by="examdate">Exam Date</th>
+        <th data-md-column data-md-order-by="voucher.code">Voucher</th>
+      </tr>
+    </thead>
+    <tbody data-md-body>
+      <tr data-data-md-row  data-data-md-select-id="name" data-data-md-auto-select data-ng-repeat="exam in pendingExamList  | filter:query.filter | orderBy: query.order  | limitTo: query.limit: (query.page - 1) * query.limit">
+        <td data-md-cell>{{exam.employee.firstname}} {{exam.employee.lastname}}</td>
+		<td data-md-cell>
+		<i class="fa fa-info-circle" aria-hidden="true">
+			<md-tooltip md-direction="top">
+			    {{exam.certificate.name}}
+			</md-tooltip>
+		</i> {{exam.certificate.abbreviation}}
+		</td>
+		<td data-md-cell>{{exam.examdate}}</td>
+		<td data-md-cell>{{exam.voucher.code}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+<md-table-pagination data-ng-show="pendingExamList.length>0" data-md-limit="query.limit" data-md-limit-options="limitOptions" 
+					data-md-page="query.page" data-md-total="{{pendingExamList.length}}" data-md-on-paginate="pendingExamList" 
+					data-md-page-select></md-table-pagination>
+ </div>
+ <div class="md-whiteframe-z2" data-layout-margin>
+ 	<div layout="row" layout-align="start strech">
+ 		<div data-layout-margin>
+ 			<form name="">
+ 				<div layout="column" layout-align="center strech">
+ 					<h4>Criteria</h4>
+ 					<md-input-container> <label>Employee</label> 
+				    <md-select name="company" required data-ng-model="selectedEmp" data-ng-change="changeEmployee()">
+				    	<md-option value="*">All</md-option>
+						<md-option data-ng-repeat="emp in employeeList" data-ng-value="emp">{{emp.firstname}} {{emp.lastname}}</md-option> 
+					</md-select>
+					</md-input-container>
+					<md-input-container> <label>Certificate</label> 
+				    <md-select name="certificate" required data-ng-model="selectedCertificate" data-ng-change="changeCertificate()">
+				    	<md-option value="*">All</md-option>
+						<md-option data-ng-repeat="cert in certificateList" ng-value="cert">{{cert.abbreviation}}</md-option> 
+					</md-select>
+					</md-input-container>
+				   	<md-input-container>
+					   	<md-checkbox data-ng-model="filterPerMonth" data-ng-change="getMonthList()" aria-label="Filter per month">
+				            Filter per month
+				          </md-checkbox>
+					</md-input-container>
+					<md-input-container> <label>Results per month</label> 
+				    <md-select name="certificate" required data-ng-model="selectedMonth" data-ng-change="changeMonth()"
+				    			data-ng-disabled="!filterPerMonth">
+				    	<md-option value="*">All</md-option>
+						<md-option data-ng-repeat="month in monthList" ng-value="cert">{{month.name}}</md-option> 
+					</md-select>
+					</md-input-container>
+ 				</div>
+ 			</form>
+ 		</div>
+ <div data-layout-margin>
+ <md-toolbar class="md-toolbar-tools md-warn" data-layout="row" data-layout-align="space-between stretch">
+ 	<h4>Exam result(s)</h4>
+   	<md-input-container>
+   	<input name="filter" id="filter" data-ng-model="query.filter" placeholder="Search">
+	</md-input-container>
+</md-toolbar>
+<p data-ng-show="examResultList.length==0">No record(s) to show.</p>
+<md-table-container data-ng-show="examResultList.length>0">
+  <table data-md-table>
+    <thead data-md-head data-md-order="query.order" data-md-on-reorder="examResultList">
+      <tr data-md-row class="md-warn">
+        <th data-md-column data-md-order-by="firstname"><span>Employee</span></th>
+        <th data-md-column data-md-order-by="certificate.abbreviation"><span>Certificate</span></th>
+        <th data-md-column data-md-order-by="examdate">Result</th>
+        <th data-md-column data-md-order-by="voucher.code">Score</th>
+      </tr>
+    </thead>
+    <tbody data-md-body>
+      <tr data-data-md-row  data-data-md-select-id="name" data-data-md-auto-select data-ng-repeat="exam in examResultList  | filter:query.filter | orderBy: query.order  | limitTo: query.limit: (query.page - 1) * query.limit">
+        <td data-md-cell>{{exam.employee.firstname}} {{exam.employee.lastname}}</td>
+		<td data-md-cell>
+		<i class="fa fa-info-circle" aria-hidden="true">
+			<md-tooltip md-direction="top">
+			    {{exam.certificate.name}}
+			</md-tooltip>
+		</i> {{exam.certificate.abbreviation}}
+		</td>
+		<td data-md-cell>{{exam.examdate}}</td>
+		<td data-md-cell>{{exam.voucher.code}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+<md-table-pagination data-ng-show="examResultList.length>0" data-md-limit="query.limit" 
+					data-md-limit-options="limitOptions" data-md-page="query.page" data-md-total="{{examResultList.length}}" 
+					data-md-on-paginate="examResultList" data-md-page-select></md-table-pagination>
+ 
+ 		
+ 		</div>
+ 	</div>
+ </div>
+</div>

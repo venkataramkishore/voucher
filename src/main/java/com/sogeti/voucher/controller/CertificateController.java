@@ -4,6 +4,7 @@
 package com.sogeti.voucher.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,11 +20,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sogeti.voucher.models.Certificate;
+import com.sogeti.voucher.models.CertifiedCountPerCertificate;
 import com.sogeti.voucher.models.Company;
 import com.sogeti.voucher.models.Employee;
 import com.sogeti.voucher.services.CertificateService;
 import com.sogeti.voucher.services.CompanyService;
 import com.sogeti.voucher.services.EmployeeService;
+import com.sogeti.voucher.services.ExamService;
 import com.sogeti.voucher.ui.models.UICertificate;
 import com.sogeti.voucher.util.VoucherConstants;
 import com.sogeti.voucher.util.VoucherResponse;
@@ -45,6 +48,9 @@ public class CertificateController {
 	
 	@Autowired
 	private EmployeeService empService;
+	
+	@Autowired
+	private ExamService examService;
 	
     @GetMapping("/certificates")
     public VoucherResponse certificateList() {
@@ -191,4 +197,33 @@ public class CertificateController {
          logger.info("Exiting getIssuedCertificates method ");
          return voucherResponse;
     }
+    
+    @GetMapping("/certificatecountlist")
+    public VoucherResponse getCertificateSuccessCountList(Principal user) {
+    	logger.info("Inside getIssuedCertificates method with "+ user.getName());
+    	 VoucherResponse voucherResponse = new VoucherResponse();
+    	 List<CertifiedCountPerCertificate> certCntList = new ArrayList<>();
+         try {
+        	 List<Certificate> certList = this.certificateService.findAll();
+        		for (Certificate certificate : certList) {
+        			Long certifiedCount = examService.getSuccessCertifiedCount(certificate);
+        			CertifiedCountPerCertificate ccpc = new CertifiedCountPerCertificate();
+        			ccpc.setCompanyName(certificate.getCompany().getName());
+        			ccpc.setCertificateName(certificate.getName());
+        			ccpc.setCertificateAbbreviation(certificate.getAbbreviation());
+        			ccpc.setCertifiedCount(certifiedCount);
+        			certCntList.add(ccpc);
+        		    }
+      			voucherResponse.setStatus(VoucherConstants.SUCCESS);
+      			voucherResponse.setSuccessResponse(certCntList);
+        	 
+ 		} catch (Exception e) {
+ 			logger.error("Unable to delete certificate with error ", e);
+ 			voucherResponse.setStatus(VoucherConstants.FAILURE);
+ 			voucherResponse.setFailureResponse("Unable to find issued certificates");
+ 		}
+         logger.info("Exiting getIssuedCertificates method ");
+         return voucherResponse;
+    }
+    
 }

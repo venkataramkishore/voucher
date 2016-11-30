@@ -1,0 +1,106 @@
+<form name="employeeForm" data-layout-padding>
+	<div layout="column" data-layout-align="center strech">
+		<h4>Employee</h4>
+		<md-input-container> <label>Employee ID</label>
+		<input name="empid" data-ng-model="employee.id"
+			required placeholder="Employee ID" pattern="[0-9]{3,6}">
+		<div data-ng-messages="employeeForm.empid.$error">
+			<div data-ng-message="required">This is required!</div>
+			<div data-ng-message="pattern">Only numeric is allowed!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <label>First name</label>
+		<input name="firstname" data-ng-model="employee.firstname"
+			required placeholder="First Name" maxlength="100">
+		<div data-ng-messages="employeeForm.firstname.$error">
+			<div data-ng-message="required">This is required!</div>
+			<div data-ng-message="maxlength">Only 100 characters are
+				allowed!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <label>Last name</label>
+		<input name="lastname" data-ng-model="employee.lastname"
+			required placeholder="Last Name" maxlength="100">
+		<div data-ng-messages="employeeForm.lastname.$error">
+			<div data-ng-message="required">This is required!</div>
+			<div data-ng-message="maxlength">Only 100 characters are
+				allowed!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <label>Username</label>
+		<input name="username" data-ng-model="employee.username"
+			required placeholder="Username" maxlength="10">
+		<div data-ng-messages="employeeForm.username.$error">
+			<div data-ng-message="required">This is required!</div>
+			<div data-ng-message="maxlength">Only 10 characters are
+				allowed!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <label>Email (@sogeti.com)</label> <input
+			name="email" class="form-control"
+			data-ng-model="employee.emailname" required placeholder="Email @sogeti.com"
+			maxlength="100">
+		<div data-ng-messages="employeeForm.email.$error">
+			<div data-ng-message="required">This is required!</div>
+			<div data-ng-message="maxlength">Only 100 characters are
+				allowed!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> 
+		<label>Manager</label> 
+	    <md-select name="manager" required data-ng-model="employee.managerid" >
+			<md-option data-ng-repeat="mgr in managerList" data-ng-value="mgr.id">{{mgr.firstname}} {{mgr.lastname}}</md-option> 
+		</md-select>
+		<div data-ng-messages="employeeForm.manager.$error">
+			<div data-ng-message="required">This is required!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> 
+		<label>Role</label> 
+	    <md-select name="role" required data-ng-model="employee.role" >
+			<md-option data-ng-repeat="role in roleList" data-ng-value="role.value">{{role.key}}</md-option> 
+		</md-select>
+		<div data-ng-messages="employeeForm.role.$error">
+			<div data-ng-message="required">This is required!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> 
+		<label>Service</label> 
+	    <md-select name="service" required data-ng-model="employee.status" >
+			<md-option data-ng-repeat="service in serviceList" data-ng-value="service.value">{{service.key}}</md-option> 
+		</md-select>
+		<div data-ng-messages="employeeForm.service.$error">
+			<div data-ng-message="required">This is required!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <label>Function Number</label>
+		<input name="functionnumber" data-ng-model="employee.functionnumber"
+			required placeholder="Function Number" maxlength="4">
+		<div data-ng-messages="employeeForm.functionnumber.$error">
+			<div data-ng-message="required">This is required!</div>
+			<div data-ng-message="maxlength">Only 4 characters are
+				allowed!</div>
+		</div>
+		</md-input-container>
+		<md-input-container class="md-block">
+        <label>Function Description</label>
+        <input md-maxlength="100" required md-no-asterisk name="functiondescription" ng-model="employee.functiondescription">
+        <div data-ng-messages="employeeForm.functiondescription.$error">
+          <div data-ng-message="required">This is required.</div>
+          <div data-ng-message="md-maxlength">The description must be less than 100 characters long.</div>
+        </div>
+      </md-input-container>
+		<md-input-container> 
+			<md-button class="md-primary" data-ng-click="reset()">Cancel</md-button> 
+			<md-button class="md-primary" data-ng-show="!editOpr"
+					data-ng-disabled="employeeForm.$invalid" data-ng-click="create()"
+					data-ng-class="{'md-raised md-hue-1': (employeeForm.$dirty && employeeForm.$valid) }"
+					aria-label="Create certificate">Add</md-button> 
+			<md-button class="md-primary" data-ng-show="editOpr"
+				data-ng-disabled="employeeForm.$invalid" data-ng-click="update()"
+				data-ng-class="{'md-raised md-hue-1': (employeeForm.$dirty && employeeForm.$valid) }"
+				aria-label="Update certificate">Update</md-button> 
+		</md-input-container>
+	</div>
+</form>
+</div>

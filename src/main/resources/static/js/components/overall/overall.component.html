@@ -1,0 +1,112 @@
+<div data-layout="column" data-layout-align="start strech">
+<div class="md-whiteframe-z2" data-layout-margin>
+<md-toolbar class="md-table-toolbar md-warn" data-layout="row" data-layout-align="space-between stretch">
+    <h4>Vouchers Expire soon</h4>
+   	<md-input-container>
+   	<input name="filter" id="filter" data-ng-model="query.filter" placeholder="Search">
+	</md-input-container>
+</md-toolbar>
+<p data-ng-show="expiringVouchers.length==0">No record(s) to show.</p>
+<md-table-container  data-ng-show="expiringVouchers.length>0">
+  <table data-md-table >
+    <thead data-md-head data-md-order="query.order" data-md-on-reorder="expiringVouchers">
+      <tr data-md-row>
+        <th data-md-column data-md-order-by="company.name"><span>Company</span></th>
+        <th data-md-column data-md-order-by="code"><span>Code</span></th>
+        <th data-md-column data-md-order-by="validtill">Expiry Date</th>
+      </tr>
+    </thead>
+    <tbody data-md-body>
+      <tr data-data-md-row  data-data-md-select-id="code" data-data-md-auto-select data-ng-repeat="expVoucher in expiringVouchers  | filter:query.filter |  orderBy: query.order">
+        <td data-md-cell>{{expVoucher.company.name}}</td>
+		<td data-md-cell>{{expVoucher.code}}</td>
+		<td data-md-cell>{{expVoucher.validtill}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+<md-table-pagination data-ng-show="expiringVouchers.length>0" data-md-limit="query.limit" data-md-limit-options="limitOptions" 
+						data-md-page="query.page" data-md-total="{{expiringVouchers.length}}" data-md-on-paginate="expiringVouchers" 
+						data-md-page-select></md-table-pagination>
+</div>
+<div class="md-whiteframe-z2" data-layout-margin>
+<md-toolbar class="md-table-toolbar md-warn" data-layout="row" data-layout-align="space-between stretch">
+    <h4>Success Certified Count</h4>
+   	<md-input-container>
+   	<input name="filter" id="filter" data-ng-model="query.filter" placeholder="Search">
+	</md-input-container>
+</md-toolbar>
+<p data-ng-show="successCertCntList.length==0">No record(s) to show.</p>
+<md-table-container data-ng-show="successCertCntList.length>0">
+  <table data-md-table >
+    <thead data-md-head data-md-order="query.order" data-md-on-reorder="successCertCntList">
+      <tr data-md-row>
+        <th data-md-column data-md-order-by="companyName"><span>Company</span></th>
+        <th data-md-column data-md-order-by="certificateName"><span>Certificate Name</span></th>
+        <th data-md-column data-md-order-by="certificateAbbreviation"><span>Abbreviation</span></th>
+        <th data-md-column data-md-order-by="certifiedCount">Count</th>
+      </tr>
+    </thead>
+    <tbody data-md-body>
+      <tr data-data-md-row  data-data-md-select-id="name" data-data-md-auto-select data-ng-repeat="item in successCertCntList  | filter:query.filter | orderBy: query.order  | limitTo: query.limit: (query.page - 1) * query.limit">
+        <td data-md-cell>{{item.companyName}}</td>
+        <td data-md-cell>{{item.certificateName}}</td>
+		<td data-md-cell>
+		<i class="fa fa-info-circle" aria-hidden="true">
+			<md-tooltip md-direction="top">
+					{{item.certificateName}}
+			</md-tooltip>
+		</i> {{item.certificateAbbreviation}}
+				
+		</td>
+		<td data-md-cell>{{item.certifiedCount}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+<md-table-pagination data-ng-show="successCertCntList.length>0" data-md-limit="query.limit" data-md-limit-options="limitOptions" 
+					data-md-page="query.page" data-md-total="{{successCertCntList.length}}" data-md-on-paginate="successCertCntList" 
+					data-md-page-select></md-table-pagination>
+ 
+</div>
+<div class="md-whiteframe-z2" data-layout-margin>
+<md-toolbar class="md-table-toolbar md-warn" data-layout="row" data-layout-align="space-between stretch">
+    <h4>All Pending exam list</h4>
+   	<md-input-container>
+   	<input name="filter" id="filter" data-ng-model="query.filter" placeholder="Search">
+	</md-input-container>
+</md-toolbar>
+<p data-ng-show="allPendingExamList.length==0">No record(s) to show.</p>
+<md-table-container data-ng-show="allPendingExamList.length>0">
+  <table data-md-table >
+    <thead data-md-head data-md-order="query.order" data-md-on-reorder="allPendingExamList" >
+      <tr data-md-row >
+        <th data-md-column data-md-order-by="firstname"><span>Employee</span></th>
+        <th data-md-column data-md-order-by="exam.certificate.name"><span>Certificate Name</span></th>
+        <th data-md-column data-md-order-by="certificate.abbreviation"><span>Abbreviation</span></th>
+        <th data-md-column data-md-order-by="examdate">Exam Date</th>
+        <th data-md-column data-md-order-by="voucher.code">Voucher</th>
+      </tr>
+    </thead>
+    <tbody data-md-body>
+      <tr data-data-md-row  data-data-md-select-id="name" data-data-md-auto-select data-ng-repeat="exam in allPendingExamList  | filter:query.filter | orderBy: query.order  | limitTo: query.limit: (query.page - 1) * query.limit">
+        <td data-md-cell>{{exam.employee.firstname}} {{exam.employee.lastname}}</td>
+        <td data-md-cell>{{exam.certificate.name}}</td>
+		<td data-md-cell>
+		<i class="fa fa-info-circle" aria-hidden="true">
+			<md-tooltip md-direction="top">
+			    {{exam.certificate.name}}
+			</md-tooltip>
+		</i> {{exam.certificate.abbreviation}}
+		</td>
+		<td data-md-cell>{{exam.examdate}}</td>
+		<td data-md-cell>{{exam.voucher.code}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+<md-table-pagination data-ng-show="allPendingExamList.length>0" data-md-limit="query.limit" data-md-limit-options="limitOptions" 
+					data-md-page="query.page" data-md-total="{{allPendingExamList.length}}" data-md-on-paginate="allPendingExamList" 
+					data-md-page-select></md-table-pagination>
+ 
+</div>

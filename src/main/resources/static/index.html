@@ -6,78 +6,26 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Voucher</title>
 <meta name="description" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <!--[if IE]><link rel="shortcut icon" href="images/favicon.ico"><![endif]-->
 <link rel="icon" href="images/favicon.png">
 <link href="css/angular-bootstrap.css" rel="stylesheet">
 </head>
-<body data-ng-app="voucherApp">
-	<nav class="navbar navbar-default" data-ng-controller="navigation as nav">
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-					aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#/home"> <img alt="Sogeti" style="margin:-10px"
-					src="./images/logo.png">
-				</a>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#/home"><i
-							class="fa fa-home" aria-hidden="true"></i> Home </a></li>
-					<li><a href="#/myoverview"><i
-							class="fa fa-book" aria-hidden="true"></i> My Overview </a></li>
-					<li data-ng-show="!authenticated"><a href="#/login"><i class="fa fa-sign-in"
-							aria-hidden="true"></i> login</a></li>
-					<li class="dropdown"><a  class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false"><i class="fa fa-cog fa-fw"></i>  Manage <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#/parameters"><i class="fa fa-pencil fa-fw"></i>
-									Application Paramaters</a></li>
-							<li><a href="#/companies"><i class="fa fa-globe fa-fw"></i>
-									Companies</a></li>
-							<li><a href="#/employees"><i class="fa fa-users fa-fw"></i>
-									Employees</a></li>
-							<li><a href="#/certificates"><i class="fa fa-certificate fa-fw"></i>
-									Certificates</a></li>
-							<li><a href="#/purchaseorders"><i
-									class="fa fa-cart-arrow-down fa-fw"></i> Purchase Orders</a></li>
-							<li><a href="#/vouchers"><i class="fa fa-folder-open fa-fw"></i>
-									Vouchers</a></li>
-							<li><a href="#/emailtemplates"><i
-									class="fa fa-envelope-o fa-fw"></i> E-mail Templates</a></li>
-							<li class="divider"></li>
-							<li><a href="#/addemployee"><i class="fa fa-user-plus fa-fw"></i>
-									Add Employee</a></li>
-						</ul></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li data-ng-show="authenticated" class="dropdown"><a  class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">{{user.username}} <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a >{{user.authority}}</a></li>
-							<li role="separator" class="divider"></li>
-							<li data-ng-show="authenticated"><a 
-								data-ng-click="nav.logout()">logout</a></li>
-						</ul></li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container-fluid -->
-	</nav>
-	<div class="clearfix"></div>
-	<div data-ng-view class="container-fluid"></div>
+<body data-ng-app="voucherApp" data-ng-cloak>
+	<div data-app-navbar></div>
+	<md-content layout="column" flex>
+
+      <md-card data-ng-view></md-card>
+
+      <footer layout="column" layout-align="end">
+        <footer-content layout="row" layout-align="start center" layout-wrap>
+          <div layout="row" layout-align="start center">
+            <span>Sponsored by &nbsp; Sogeti</span>
+          </div>
+        </footer-content>
+      </footer>
+
+    </md-content>
 	
 	<script src="js/angular-bootstrap.js" type="text/javascript"></script>
 	<script src="https://rawgithub.com/eligrey/FileSaver.js/master/FileSaver.js" type="text/javascript"></script>
@@ -85,7 +33,11 @@
 	<script src="js/hello.js"></script>
 	<script src="js/application.controller.js"></script>
 	<script src="js/application.config.js"></script>
+	<script src="js/application.service.js"></script>
 	<script src="js/hello.js"></script>
+	<script src="js/components/navbar/navbar.module.js"></script>
+	<script src="js/components/navbar/navbar.controller.js"></script>
+	<script src="js/components/navbar/navbar.directive.js"></script>
 	<script src="js/components/home/home.module.js"></script>
 	<script src="js/components/home/home.service.js"></script>
 	<script src="js/components/home/home.controller.js"></script>
@@ -104,8 +56,18 @@
 	<script src="js/components/employees/employee.module.js"></script>
 	<script src="js/components/employees/employee.service.js"></script>
 	<script src="js/components/employees/employee.controller.js"></script>
+	<script src="js/components/employees/employee.form.directive.js"></script>
 	<script src="js/components/purchaseorders/purchaseorder.module.js"></script>
 	<script src="js/components/purchaseorders/purchaseorder.service.js"></script>
 	<script src="js/components/purchaseorders/purchaseorder.controller.js"></script>
+	
+	<script src="js/components/overall/overall.module.js"></script>
+	<script src="js/components/overall/overall.service.js"></script>
+	<script src="js/components/overall/overall.controller.js"></script>
+	
+	<script src="js/components/myteam/myteam.module.js"></script>
+	<script src="js/components/myteam/myteam.service.js"></script>
+	<script src="js/components/myteam/myteam.controller.js"></script>
+	
 </body>
 </html>

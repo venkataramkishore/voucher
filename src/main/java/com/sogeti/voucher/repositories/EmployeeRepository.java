@@ -31,4 +31,12 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("select e from Employee e where e.status='OUT_SERVICE'")
     public List<Employee> findByOutService() throws EmployeeNotFound;
     
+    @Query("select e from Employee e where e.status='IN_SERVICE' and e.role in ('ROLE_UNIT_MANAGER', 'ROLE_ADMINISTRATOR')")
+    public List<Employee> findManagers()  throws EmployeeNotFound;
+    
+    @Query("select e from Employee e where e.status='IN_SERVICE' and e.role in ('ROLE_ADMINISTRATOR')")
+    public List<Employee> findAdmins()  throws EmployeeNotFound;
+    
+    @Query("select e from Employee e where e.status='IN_SERVICE' and e.managerid= :managerId")
+    public List<Employee> findMyEmployees(@Param("managerId") Long managerId)  throws EmployeeNotFound;
 }

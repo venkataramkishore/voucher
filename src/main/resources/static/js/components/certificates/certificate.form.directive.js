@@ -8,7 +8,8 @@ angular.module("certificateModule").directive("certificateForm", function () {
         	fetchList:"&"
         },
         templateUrl: 'js/components/certificates/certificate.form.directive.html',
-        controller: ['$scope','certificateService', 'toastr',function($scope, certificateService, toastr) {
+        controller: ['$scope','certificateService', '$mdToast', 'applicationService', 
+                     function($scope, certificateService, $mdToast, applicationService) {
         	
         	$scope.statusList = [{key:'Issued', value:'ISSUED'}, {key:'Discontinued', value:'DISCONTINUED'}];
         	
@@ -17,16 +18,19 @@ angular.module("certificateModule").directive("certificateForm", function () {
         		 .then(function(response){
      				var status = response.data.status;
      				if(angular.isDefined(status) && angular.equals(status, "success")){
-     					toastr.success('Certificate', 'Updated Succesfully..!!');
+     					applicationService.showToast('Updated Succesfully..!!');
      					$scope.$parent.getCertificateList();
      					$scope.reset();
      				}else {
-     					$scope.companyList = [];
-     					toastr.error('Certificate Error', response.data.failureResponse);
+     					applicationService.showToast('Certificate Error' + response.data.failureResponse);
      				}
      			}, function(error){
-     				$scope.companyList = [];
-     				toastr.error('Error', "Unable to perform operation..!!");
+     				applicationService.showToast('Error Unable to perform operation..');
+     				if(error.status == 401){
+        				applicationService.redirectToLogin();
+        			}else {
+        				console.error(error);
+        			}
      			});
         	};
         	
@@ -35,16 +39,20 @@ angular.module("certificateModule").directive("certificateForm", function () {
         		 .then(function(response){
       				var status = response.data.status;
       				if(angular.isDefined(status) && angular.equals(status, "success")){
-      					toastr.success('Certificate', 'Created Succesfully..!!');
+      					applicationService.showToast('Created Succesfully..!!');
       					$scope.$parent.getCertificateList();
       					$scope.reset();
       				}else {
-      					$scope.companyList = [];
-      					toastr.error('Certificate Error', response.data.failureResponse);
+      					applicationService.showToast('Certificate Error '+response.data.failureResponse);
       				}
       			}, function(error){
       				$scope.companyList = [];
-      				toastr.error('Error', "Unable to perform operation..!!");
+      				applicationService.showToast("Error Unable to perform operation..!!");
+      				if(error.status == 401){
+        				applicationService.redirectToLogin();
+        			}else {
+        				console.error(error);
+        			}
       			});
         	};
         	
@@ -54,8 +62,6 @@ angular.module("certificateModule").directive("certificateForm", function () {
         	};
         
         }],
-        link: function ($scope, element, attrs) { 
-        	console.log('running certificate link function');
-        } //DOM manipulation
+        link: function ($scope, element, attrs) { } //DOM manipulation
     }
 });

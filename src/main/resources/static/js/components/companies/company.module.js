@@ -1,1 +1,1 @@
-angular.module("companyModule", ['ui.bootstrap']);
+angular.module("companyModule", ['ngMaterial','ngAnimate']);

@@ -1,4 +1,5 @@
-angular.module("certificateModule").controller("certificateCtrl", ['$scope', 'certificateService', 'companyService', function($scope, certificateService, companyService){
+angular.module("certificateModule").controller("certificateCtrl", ['$scope', 'certificateService', 'companyService', 'applicationService', 
+                                                                   function($scope, certificateService, companyService, applicationService){
 	$scope.certificateList = [];
 	$scope.filteredList = [];
 	
@@ -6,17 +7,26 @@ angular.module("certificateModule").controller("certificateCtrl", ['$scope', 'ce
 	$scope.companyList = [];
 	$scope.editOpr = false;
 	//pagination logic starts
-	  $scope.currentPage = 1;
-	
-	  $scope.setPage = function (pageNo) {
-	    $scope.currentPage = pageNo;
-	  };
-	
-	  $scope.pageChanged = function() {
-		   console.log('Page changed to: ' + $scope.currentPage);
-	  };
-	
-	  $scope.maxSize = 10;
+	$scope.selected = [];
+
+	$scope.filter = {
+		    options: {
+		      debounce: 500
+		    }
+		  };
+
+		  $scope.query = {
+		    filter: '',
+		    limit: '10',
+		    order: 'name',
+		    page: 1
+		  };
+	  $scope.limitOptions = [5, 10, 15, {
+		  label: 'All',
+		  value: function () {
+		    return $scope.certificateList.length;
+		  }
+		}];
 	//pagination logic ends
 	
 	  $scope.fetchCompanyList = function () {
@@ -27,10 +37,15 @@ angular.module("certificateModule").controller("certificateCtrl", ['$scope', 'ce
 					$scope.companyList = response.data.successResponse;
 				}else {
 					$scope.companyList = [];
+					applicationService.showToast("No Company(s) to show.");
 				}
 			}, function(error){
 				$scope.companyList = [];
-				console.error(error);
+				if(error.status == 401){
+    				applicationService.redirectToLogin();
+    			}else {
+    				console.error(error);
+    			}
 			});
 	  };
 	  
@@ -43,13 +58,20 @@ angular.module("certificateModule").controller("certificateCtrl", ['$scope', 'ce
 					$scope.totalItems= $scope.certificateList.length;
 				}else {
 					$scope.certificateList = [];
+					applicationService.showToast("No Certificate(s) to show.");
 				}
 			}, function(error){
 				$scope.certificateList = [];
-				console.error(error);
+				if(error.status == 401){
+    				applicationService.redirectToLogin();
+    			}else {
+    				console.error(error);
+    			}
 			});
 	};
-	
+	$scope.getPaginatedCertificateList = function () {
+		return $scope.certificateList;
+	};
 	$scope.editCertificate = function( certificate ){
 		$scope.editOpr = true;
 		certificate.companyId = certificate.company.id;

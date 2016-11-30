@@ -1,1 +1,1 @@
-angular.module("purchaseorderModule", ['ui.bootstrap']);
+angular.module("purchaseorderModule", ['ngMaterial','ngAnimate']);

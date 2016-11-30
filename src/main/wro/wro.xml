@@ -4,22 +4,27 @@
         xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
 
     <group name="angular-bootstrap">
-        <css>webjar:bootstrap/3.3.4/less/bootstrap.less</css>
+       <!--  <css>webjar:bootstrap/3.3.4/less/bootstrap.less</css> -->
         <css>file:${project.basedir}/src/main/wro/main.less</css>
         <css>webjar:fontawesome/4.5.0/less/font-awesome.less</css>
-        <css>webjar:angular-ui-bootstrap-bower/2.2.0/ui-bootstrap-csp.css</css>
-        <css>webjar:angular-toastr/2.1.1/dist/angular-toastr.min.css</css>
-        <js>webjar:jquery/2.1.1/jquery.min.js</js>
+       <!--  <css>webjar:angular-ui-bootstrap-bower/2.2.0/ui-bootstrap-csp.css</css> -->
+       <!--  <css>webjar:angular-toastr/2.1.1/dist/angular-toastr.min.css</css> -->
+        <css>webjar:angular-material/1.1.1/angular-material.min.css</css>
+        <css>webjar:angular-material-data-table/0.10.9/dist/md-data-table.min.css</css>
+       <!--  <js>webjar:jquery/2.1.1/jquery.min.js</js> -->
         <js>webjar:angularjs/1.4.4/angular.min.js</js>
         <js>webjar:angularjs/1.4.4/angular-route.min.js</js>
         <js>webjar:angularjs/1.4.4/angular-cookies.min.js</js>
         <js>webjar:angularjs/1.4.4/angular-animate.min.js</js>
-        <js>webjar:angular-resource/1.4.5/angular-resource.min.js</js>
-        <js>webjar:angular-translate/2.7.2/angular-translate.min.js</js>
-        <js>webjar:angular-toastr/2.1.1/dist/angular-toastr.tpls.min.js</js>
+        <js>webjar:angularjs/1.4.4/angular-aria.min.js</js>
+        <js>webjar:angularjs/1.4.4/angular-messages.min.js</js>
+        <js>webjar:angular-material/1.1.1/angular-material.min.js</js>
+        <js>webjar:angular-material-data-table/0.10.9/dist/md-data-table.min.js</js>
+        <!-- <js>webjar:angular-resource/1.4.5/angular-resource.min.js</js>
+        <js>webjar:angular-translate/2.7.2/angular-translate.min.js</js> -->
+       <!--  <js>webjar:angular-toastr/2.1.1/dist/angular-toastr.tpls.min.js</js>
         <js>webjar:bootstrap/3.3.4/js/bootstrap.min.js</js>
-        <js>webjar:angular-ui-bootstrap-bower/2.2.0/ui-bootstrap-tpls.min.js</js>
-        
+        <js>webjar:angular-ui-bootstrap-bower/2.2.0/ui-bootstrap-tpls.min.js</js> -->
     </group>
     <!-- <group name="app">
     	 <js>file:${project.basedir}/src/main/</js>
