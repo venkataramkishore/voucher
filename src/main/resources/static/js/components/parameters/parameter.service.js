@@ -7,7 +7,7 @@ angular.module("parameterModule").service("parameterService", ['$http', function
 	};
 	
 	self.saveParameter = function (data) {
-		return $http.post("./parameters", data);
+		return $http.post("./parameter", data);
 	};
 	
 	self.getParameter = function ( compId ) {
@@ -15,10 +15,7 @@ angular.module("parameterModule").service("parameterService", ['$http', function
 	};
 	
 	self.updateParameter = function (data) {
-		return $http.put("./update", data);
+		return $http.put("./parameter", data);
 	};
 	
-	self.saveParameter = function (data) {
-		return $http.post("./parameters", data);
-	};
 }]);

@@ -1,13 +1,28 @@
 angular
 		.module("voucherApp")
 		.config(
-				function($routeProvider, $httpProvider) {
+				function($routeProvider, $httpProvider, $mdThemingProvider) {
 
+					$mdThemingProvider
+				    .theme('default')
+				    .primaryPalette('red')
+				    .accentPalette('blue')
+				    .warnPalette('orange')
+				    .backgroundPalette('grey');
+					
 					$routeProvider
 							.when('/', {
-								templateUrl : 'js/components/home/home.component.html',
-								controller : 'homeCtrl',
+								templateUrl : 'login.html',
+								controller : 'navbarCtrl',
+								controllerAS: "controller"
 							})
+							.when(
+									'/home',
+									{
+										templateUrl : 'js/components/home/home.component.html',
+										controller : 'homeCtrl',
+									})
+							
 							.when(
 									'/companies',
 									{
@@ -38,11 +53,27 @@ angular
 										templateUrl : 'js/components/certificates/certificate.component.html',
 										controller : 'certificateCtrl'
 									})
+							.when(
+									'/teamoverall',
+									{
+										templateUrl : 'js/components/overall/overall.component.html',
+										controller : 'overallCtrl'
+									})
+							.when(
+									'/myteam',
+									{
+										templateUrl : 'js/components/myteam/myteam.component.html',
+										controller : 'myteamCtrl'
+									})
 							.when('/login', {
 								templateUrl : 'login.html',
-								controller : 'navigation',
-								controllerAs : 'controller'
-							}).when('/error', {
+								controller : 'navbarCtrl',
+								controllerAS: "controller"
+							})
+							.when('/logout', {
+								controller : 'logoutCtrl',
+							})
+							.when('/error', {
 								templateUrl : './error.html',
 								controller : 'error',
 							}).otherwise('/');

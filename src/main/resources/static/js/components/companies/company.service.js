@@ -7,7 +7,7 @@ angular.module("companyModule").service("companyService", ['$http', function($ht
 	};
 	
 	self.saveCompany = function (data) {
-		return $http.post("./companies", data);
+		return $http.post("./company", data);
 	};
 	
 	self.getCompany = function ( compId ) {
@@ -18,10 +18,10 @@ angular.module("companyModule").service("companyService", ['$http', function($ht
 		return $http.get('./activecompanies');
 	}
 	self.updateCompany = function (data) {
-		return $http.put("./update", data);
+		return $http.put("./company", data);
 	};
 	
-	self.saveCompany = function (data) {
-		return $http.post("./companies", data);
+	self.deleteCompany = function (data) {
+		return $http.delete("./company/"+data.id);
 	};
 }]);

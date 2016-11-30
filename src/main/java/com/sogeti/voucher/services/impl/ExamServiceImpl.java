@@ -3,6 +3,7 @@
  */
 package com.sogeti.voucher.services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sogeti.voucher.enums.ExamStatus;
+import com.sogeti.voucher.models.Certificate;
+import com.sogeti.voucher.models.Company;
 import com.sogeti.voucher.models.Employee;
 import com.sogeti.voucher.models.Exam;
 import com.sogeti.voucher.repositories.ExamRepository;
@@ -84,5 +87,23 @@ public class ExamServiceImpl implements ExamService {
 	public List<Exam> findByEmployeeAndStatus(Employee employee, List<String> status) {
 		return this.ExamRepo.findByEmployeeAndStatus(employee, status);
 	}
+	
+	@Override
+	public List<Exam> findByEmployeeCompanyAndStatus(Employee employee, Company comp, List<String> status) {
+		return this.ExamRepo.findByEmployeeCompanyAndStatus(employee.getId(), comp, status);
+	}
 
+	@Override
+	public Long getSuccessCertifiedCount(Certificate cert) {
+		return this.ExamRepo.getSuccessCertifiedCount(cert);
+	}
+	@Override
+	public List<Exam> getAllPendingExams(List<String> status) {
+		return this.ExamRepo.getAllPendingExams(status);
+	}
+	
+	@Override
+	public Date getMonthExamList(Long managerId, List<String> status) {
+		return this.ExamRepo.getMonthExamList(managerId, status);
+	}
 }

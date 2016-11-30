@@ -1,42 +1,58 @@
-<div class="panel panel-primary">
-	<!-- Default panel contents -->
-	<div class="panel-heading">Company</div>
-	<div class="panel-body">
-		<form novalidate="novalidate">
-			<div class="form-group">
-				<label for="companyname">Company names</label> <input type="text"
-					class="form-control" id="companyname" data-ng-model="companyname"
-					placeholder="Company Name">
-			</div>
-			<div class="form-group">
-				<label for="active">Active</label> <select id="active"
-					class="form-control" data-ng-model="active">
-					<option>--Select--</option>
-					<option value="Active">Active</option>
-					<option value="Inactive">Inactive</option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="voucherThreshold">Threshold voucher availability
-					(optional)</label> <input type="number" class="form-control"
-					id="voucherThreshold" data-ng-model="voucherThreshold"
-					placeholder="Voucher Threshold" pattern="[0-9]">
-			</div>
-			<div class="form-group">
-				<label for="active">Administrator</label> <select id="active"
-					class="form-control" data-ng-model="administrator">
-					<option>--Select--</option>
-					<option value="1">Willem</option>
-					<option value="2">Venkata Kalyanam</option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="coachemail">E-mail coaches (';' separated)</label> <input
-					type="text" class="form-control" id="coachemail"
-					data-ng-model="coachemail" placeholder="E-mail coaches">
-			</div>
-			<button type="button" class="btn btn-default">Cancel</button>
-			<button type="submit" class="btn btn-primary">Add</button>
-		</form>
+<form novalidate="novalidate" name="companyForm" data-layout-padding>
+	<h4>Company</h4>
+	<div data-layout="column" data-layout-align="center strech">
+		<md-input-container> <label for="companyname">Company
+			name</label> <input type="text" class="form-control" id="companyname"
+			name="companyname" data-ng-model="company.name"
+			placeholder="Company Name">
+		<div data-ng-messages="companyForm.companyname.$error">
+			<div data-ng-message="required">This is required!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <label for="active">Active</label>
+		<md-select data-ng-model="company.status" name="active" required>
+		<md-option data-ng-value="active.value"
+			data-ng-repeat="active in activeList">{{ active.key }}</md-option> </md-select>
+		<div data-ng-messages="companyForm.active.$error">
+			<div data-ng-message="required">This is required!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <label
+			for="voucherThreshold">Threshold voucher availability
+			(optional)</label> <input type="number" class="form-control"
+			id="voucherThreshold" name="voucherThreshold"
+			data-ng-model="company.voucherthreshold" placeholder="Voucher Threshold"
+			pattern="[0-9]">
+		<div data-ng-messages="companyForm.voucherThreshold.$error">
+			<div data-ng-message="required">This is required!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> 
+		<label>Manager</label> 
+	    <md-select name="manager" required data-ng-model="company.employee.id" >
+			<md-option data-ng-repeat="mgr in managerList" data-ng-value="mgr.id">{{mgr.firstname}} {{mgr.lastname}}</md-option> 
+		</md-select>
+		<div data-ng-messages="companyForm.manager.$error">
+			<div data-ng-message="required">This is required!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <label for="coachemail">E-mail
+			coaches (';' separated)</label> <input type="text" class="form-control"
+			id="coachemail" name="coachemail" data-ng-model="company.coachesmail"
+			placeholder="E-mail coaches">
+		<div data-ng-messages="companyForm.coachemail.$error">
+			<div data-ng-message="required">This is required!</div>
+		</div>
+		</md-input-container>
+		<md-input-container> <md-button
+			class="md-primary" data-ng-click="reset()">Cancel</md-button> <md-button
+			class="md-primary" data-ng-show="!editOpr"
+			data-ng-disabled="companyForm.$invalid" data-ng-click="create()"
+			data-ng-class="{'md-raised md-hue-1': (companyForm.$dirty && companyForm.$valid) }"
+			aria-label="Create Company">Add</md-button> <md-button
+			class="md-primary" data-ng-show="editOpr"
+			data-ng-disabled="companyForm.$invalid" data-ng-click="update()"
+			data-ng-class="{'md-raised md-hue-1': (companyForm.$dirty && companyForm.$valid) }"
+			aria-label="Update Company">Update</md-button> </md-input-container>
 	</div>
-</div>
+</form>

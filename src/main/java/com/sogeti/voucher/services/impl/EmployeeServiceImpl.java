@@ -5,6 +5,7 @@ package com.sogeti.voucher.services.impl;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         
         if (updatedEmployee == null)
             throw new EmployeeNotFound("No employee with id : "+emp.getId());
+        
+         BeanUtils.copyProperties(emp, updatedEmployee);
+         this.empRepo.save(updatedEmployee);
          
         return updatedEmployee;
 	}
@@ -82,12 +86,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> findByInService() throws EmployeeNotFound {
 		return this.empRepo.findByInService();
 	}
+	
 	@Override
 	public List<Employee> findByOutService() throws EmployeeNotFound {
 		return this.empRepo.findByOutService();
 	}
+	
 	@Override
 	public Employee findByUsername(String username) throws EmployeeNotFound {
 		return this.empRepo.findByUsername(username);
+	}
+	
+	@Override
+	public List<Employee> findManagers() throws EmployeeNotFound {
+		return this.empRepo.findManagers();
+	}
+	
+	@Override
+	public List<Employee> findAdmins() throws EmployeeNotFound {
+		return this.empRepo.findAdmins();
+	}
+	
+	@Override
+	public List<Employee> findMyEmployees(Long managerid) throws EmployeeNotFound {
+		return this.empRepo.findMyEmployees(managerid);
 	}
 }

@@ -22,5 +22,7 @@ public interface EmployeeService {
     public List<Employee> findByInService() throws EmployeeNotFound;
     public List<Employee> findByOutService() throws EmployeeNotFound;
 	Employee delete(Long id) throws EmployeeNotFound;
-	
+	public List<Employee> findManagers()  throws EmployeeNotFound;
+	public List<Employee> findAdmins()  throws EmployeeNotFound;
+	public List<Employee> findMyEmployees(Long managerid)  throws EmployeeNotFound;
 }

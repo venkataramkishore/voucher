@@ -1,9 +1,31 @@
-angular.module("purchaseorderModule").controller("purchaseorderCtrl", ['$scope', '$location', 'purchaseorderService', function($scope, $location, purchaseorderService){
+angular.module("purchaseorderModule").controller("purchaseorderCtrl", ['$scope', '$location', 'purchaseorderService', 'applicationService', 
+                                                                       function($scope, $location, purchaseorderService, applicationService){
 	
 	$scope.purchaseorderList = [];
 	$scope.selectedPOrder=null;
 	$scope.vouchers = null;
 	
+	//pagination logic starts
+	$scope.filter = {
+		    options: {
+		      debounce: 500
+		    }
+		  };
+
+		  $scope.query = {
+		    filter: '',
+		    limit: '25',
+		    order: 'username',
+		    page: 1
+		  };
+		  $scope.limitOptions = [5, 10, 15, {
+			  label: 'All',
+			  value: function () {
+			    return $scope.purchaseorderList.length;
+			  }
+			}];
+	//pagination logic ends
+
 	$scope.poChange = function () {
 		if( $scope.selectedPOrder ){
 			purchaseorderService.fetchVouchers( $scope.selectedPOrder.code,  $scope.selectedPOrder.orderdate)
@@ -17,7 +39,11 @@ angular.module("purchaseorderModule").controller("purchaseorderCtrl", ['$scope',
 				}
 			}, function(error){
 				$scope.vouchers = [];
-				console.error(error);
+				if(error.status == 401){
+    				applicationService.redirectToLogin();
+    			}else {
+    				console.error(error);
+    			}
 			});
 		}
 	};
@@ -26,14 +52,7 @@ angular.module("purchaseorderModule").controller("purchaseorderCtrl", ['$scope',
 		var absUrl = $location.absUrl().substring(0, $location.absUrl().indexOf('#'));
 		console.log(absUrl);
 		window.open(absUrl+ '/povouchersxls/'+$scope.selectedPOrder.code+'/'+$scope.selectedPOrder.orderdate);
-		/*purchaseorderService.exportXLSData($scope.selectedPOrder.code,  $scope.selectedPOrder.orderdate)
-        .then(function (data, status, headers, config) {
-            var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-            var objectUrl = URL.createObjectURL(blob);
-            window.open(absUrl+ '/povouchersxls/'+code+'/'+orderDate);
-        },function (data, status, headers, config) {
-            //upload failed
-        });*/
+		
     };
     
     $scope.exportPDFData = function () {
@@ -54,7 +73,11 @@ angular.module("purchaseorderModule").controller("purchaseorderCtrl", ['$scope',
 			}
 		}, function(error){
 			$scope.purchaseorderList = [];
-			console.error(error);
+			if(error.status == 401){
+				applicationService.redirectToLogin();
+			}else {
+				console.error(error);
+			}
 		});
 	};
 	$scope.fetchPurchaseorderList();

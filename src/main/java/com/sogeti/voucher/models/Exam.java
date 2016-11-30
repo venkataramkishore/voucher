@@ -34,19 +34,16 @@ public class Exam implements Serializable {
 	private String status;
 
 	//bi-directional many-to-one association to Certificate
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="certificate_id", nullable=false)
 	private Certificate certificate;
 
 	//bi-directional many-to-one association to Employee
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="employee_id", nullable=false)
 	private Employee employee;
 
 	//bi-directional many-to-one association to Voucher
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="voucher_id")
 	private Voucher voucher;
